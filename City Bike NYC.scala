@@ -51,7 +51,7 @@ spark.sql("select * from Bike_table").show(10,false)
 
 // COMMAND ----------
 
-// Which Route Citi Bike Ride the most?//
+// Which Route Citi Bike Ride the most?//---------------------------
 
 println("-> Route Citi Bikers ride the most:")
 spark.sql("SELECT start_station_id,start_station_name,end_station_id,end_station_name, COUNT(1) AS cnt FROM bike GROUP BY 
@@ -80,14 +80,7 @@ AS dist FROM bike ORDER BY trip_duration DESC, dist DESC LIMIT 1").take(1).forea
 
 
 
-
-// COMMAND ----------
-
-
-
-// COMMAND ----------
-
-// When Do they go?//
+// When Do they go?//---------------------------------------------------
 println("-> Hours of a day they Ride mostly:")
 spark.sql("SELECT date_format(start_time,'H:m'), COUNT(1) as cnt FROM bike GROUP BY date_format(start_time,'H:m') ORDER BY cnt DESC LIMIT 10")
 .take(10).foreach(println)
@@ -102,7 +95,7 @@ Distancal(start_station_latitude,start_station_longitude,end_station_latitude,en
 
 // COMMAND ----------
 
-//Which station are most popular//
+//Which station are most popular//---------------------------------------------
 println("-> most popular stations:")
 var popularStationsDF = spark.sql("SELECT start_station_id as station_id,start_station_name as station_name, 
 COUNT(1) as cnt FROM bike GROUP BY start_station_id,start_station_name UNION ALL SELECT end_station_id as station_id,
@@ -147,7 +140,8 @@ val features = BikeRDD.map {
 
 // COMMAND ----------
 
-// Split data into training and test
+// Split data into training and test--------------------------------------------------------
+
 val training = labeled.filter(_.label != 2).randomSplit(Array(0.40, 0.60))(1)
 val test = labeled.filter(_.label != 2).randomSplit(Array(0.60, 0.40))(1)
 
